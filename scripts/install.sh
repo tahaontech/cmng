@@ -55,11 +55,11 @@ sudo apt install -y libboost-all-dev
 echo "Installing SDL2 libraries..."
 sudo apt install -y libsdl2-dev
 
-echo "dependency Installation completed!"
+echo "dependencies Installation completed!"
 
 echo "Installing cmng..."
 # download build file
-wget "TODO"
+wget -O cmng https://github.com/tahaontech/cmng/releases/download/v1/cmng-debian
 
 # make executeable
 sudo chmod +x cmng

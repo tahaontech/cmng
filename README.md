@@ -15,7 +15,7 @@ A lightweight and minimal C++ project manager tool written in Go. `CPPManager` s
 
 1. Clone the repository:
    ```bash
-   wget -O - https://example.com/install.sh | sh
+   wget -O - https://raw.githubusercontent.com/tahaontech/cmng/refs/tags/v1/scripts/install.sh | sh
    ```
 
 2. Verify installation:
