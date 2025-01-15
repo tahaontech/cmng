@@ -103,7 +103,7 @@ echo "dependencies Installation completed!"
 
 echo "Installing cmng..."
 # download build file
-wget -O cmng https://github.com/tahaontech/cmng/releases/download/v1/cmng-debian
+wget -O cmng https://github.com/tahaontech/cmng/releases/download/v1.0.1/cmng-debian
 
 # make executeable
 sudo chmod +x cmng
