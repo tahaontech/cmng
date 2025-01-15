@@ -55,6 +55,50 @@ sudo apt install -y libboost-all-dev
 echo "Installing SDL2 libraries..."
 sudo apt install -y libsdl2-dev
 
+# Install vcpkg
+
+# Function to install vcpkg
+install_vcpkg() {
+    echo "vcpkg not found. Installing..."
+    # Clone the vcpkg repository
+    git clone https://github.com/microsoft/vcpkg.git
+    cd vcpkg || { echo "Failed to change directory"; exit 1; }
+    
+    # Bootstrap vcpkg
+    ./bootstrap-vcpkg.sh || { echo "Failed to bootstrap vcpkg"; exit 1; }
+    
+    echo "vcpkg installed successfully."
+}
+
+# Function to update ~/.bashrc
+update_bashrc() {
+    local VCPKG_PATH=$(pwd)/vcpkg
+    echo "Adding vcpkg environment variables to ~/.bashrc..."
+    {
+        echo ""
+        echo "# vcpkg environment setup"
+        echo "export VCPKG_ROOT=${VCPKG_PATH}"
+        echo "export PATH=\$VCPKG_ROOT:\$PATH"
+    } >> ~/.bashrc
+    echo "Environment variables added. Reload your shell or run 'source ~/.bashrc' to apply changes."
+}
+
+# Check if vcpkg is already installed
+if ! command -v ./vcpkg/vcpkg &> /dev/null; then
+    if [ -d "vcpkg" ]; then
+        echo "vcpkg directory exists but is not installed. Attempting to bootstrap."
+        cd vcpkg || { echo "Failed to change directory"; exit 1; }
+        ./bootstrap-vcpkg.sh || install_vcpkg
+    else
+        install_vcpkg
+    fi
+else
+    echo "vcpkg is already installed."
+fi
+
+# Add environment variables to ~/.bashrc
+update_bashrc
+
 echo "dependencies Installation completed!"
 
 echo "Installing cmng..."

@@ -45,6 +45,10 @@ func CreateSimpleProject(projectName string, withTests bool) {
 		return
 	}
 
+	// Init vcpkg package manager
+	utils.CreateVCPKGManifest(projectName)
+	utils.AddTestPkg(projectName)
+
 	fmt.Println("C++ project setup complete!")
 	fmt.Printf("for running: \ncd %s & cmng run\n", projectName)
 }

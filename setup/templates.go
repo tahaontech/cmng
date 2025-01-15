@@ -11,7 +11,8 @@ func generateVsCodeConfig() string {
             "includePath": [
                 "${workspaceFolder}/include",
                 "/usr/include",
-                "/usr/local/include"
+                "/usr/local/include",
+                "${env:VCPKG_ROOT}/installed/x64-linux/include"
             ],
             "defines": [],
             "compilerPath": "/usr/bin/g++",
@@ -44,9 +45,15 @@ set(SOURCE_FILES
     src/my_class.cpp
 )
 
+# Add fmt from vcpkg
+find_package(fmt CONFIG REQUIRED)
+
 # Add executable
 add_executable(%s ${SOURCE_FILES})
-`, projectName, projectName)
+
+# link fmt from vcpkg
+target_link_libraries(%s PRIVATE fmt::fmt)
+`, projectName, projectName, projectName)
 
 	if withTests {
 		cmake += `
@@ -107,10 +114,10 @@ public:
 func generateClassCpp() string {
 	return `
 #include "my_class.h"
-#include <iostream>
+#include <fmt/core.h>
 
 void MyClass::greet() {
-    std::cout << "Hello, world!" << std::endl;
+    fmt::print("Hello World!\n");
 }
 
 `
